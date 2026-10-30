@@ -4,4 +4,9 @@ FROM wordpress:7.1.4-php8.5-fpm-alpine
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS libxml2-dev=2.13.9-r2 \
     && docker-php-ext-install soap \
     && apk del .build-deps \
-    && apk add --no-cache libxml2=2.13.9-r2
+    && apk add --no-cache \
+    libxml2=2.13.9-r2 \
+    ### CVE(s), comment when upgrading base image
+    curl=8.23.0-r0 \
+    libcurl=8.23.0-r0
+###
