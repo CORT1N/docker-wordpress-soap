@@ -1,0 +1,23 @@
+---
+name: Cleanup for Docker temporary images
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  packages: write
+
+jobs:
+  cleanup:
+    name: Delete old CI images
+    runs-on: ubuntu-latest
+    steps:
+      - uses: snok/container-retention-policy@v3.1.0
+        with:
+          image-names: wordpress-soap
+          image-tags: "ci-*"
+          cut-off: 7d
+          account: user
+          token: ${{ secrets.PACKAGES_CLEANUP_PAT }}

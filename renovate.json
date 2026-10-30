@@ -1,0 +1,26 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":disableDependencyDashboard",
+    "helpers:pinGitHubActionDigestsToSemver"
+  ],
+  "labels": ["renovate"],
+  "automerge": false,
+  "prHourlyLimit": 0,
+  "packageRules": [
+    {
+      "description": "Image de base et paquets Alpine groupés dans une seule PR",
+      "matchFileNames": ["Dockerfile"],
+      "groupName": "wordpress"
+    },
+    {
+      "description": "Paquets apk : à aligner sur la version d'Alpine de l'image de base (à changer quand elle évolue)",
+      "matchFileNames": ["Dockerfile"],
+      "matchDatasources": ["apk"],
+      "registryUrls": [
+        "https://dl-cdn.alpinelinux.org/alpine?branch=v3.24&components=main,community&arch=x86_64"
+      ]
+    }
+  ]
+}
